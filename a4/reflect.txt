@@ -1,0 +1,62 @@
+/*
+	==================================================
+	Assignment #2 Milestone #4: reflect
+	==================================================
+	Name   : Yi-Tso Kuo
+	ID     : 166577197
+	Email  : ytkuo@myseneca.ca
+	Section: NHH
+*/
+
+1. 
+A) commonHelpers.h :"None developed"
+
+B) account.h:
+  1. void removeAccount(struct Account *account, int index);
+  2. int saveAccounts(struct Account *account, int accountsSize);
+
+C) ticket.h
+  1.  void displayTicketHeader(int agentOrCus);
+  2.  void ticketStatus(const struct Ticket *ticket, int agentOrCus);
+  3.  void viewTicketMessage(const struct Ticket *ticket);
+  4.  void createNewTicket(struct AccountTicketingData *data, const struct Account *accountConst);
+  5.  void modifyTicket(struct AccountTicketingData *data, const struct Account *accountConst);
+  6.  void removeTickets(struct AccountTicketingData *data, int accountNum);
+  7.  void manageTicket(struct AccountTicketingData *data, const struct Account *accountConst);
+  8.  void closeTicketProcess(struct AccountTicketingData *data, const struct Account *accountConst, int index, int agentOrCus);
+  9.  int loadTickets(struct Ticket *tickets, int ticketsSize);
+  10. int archiveTickets(struct AccountTicketingData *data);
+  11. int saveTickets(struct Ticket *tickets, int ticketsSize);
+
+D) accountTicketingUI.h
+  1. void displayAllTicketDetailRecords(struct AccountTicketingData *data, const struct Account *accountConst, int newTickets, int activeTickets, int agentOrCus);
+  2. void updateAccount(struct Account *accounts);
+  3. void updateUserLogin(struct UserLogin *login);
+  4. void updateDemographic(struct Demographic *demo);
+  5. int viewArchivedStatistics(const char *str);
+  6. int viewArchivedMessage(int size);
+
+
+2. Two components I enjoy the most in this assignment is dealing with files and creating the common helpers. For the first one, it gives me a great sense of accomplishment that I can finally create things outside the program instead of just playing with text inside my program. I can read from other files, overwrite them and also append text to them. This is a great process for me. For the common helpers, I found that this is really useful for me to understand the basic C programming. People always said, "dealing with string in C is really difficult". While developing common helpers, I realized how complicated is string in C. It has too many constraints. For example, When we scanf a string which includes a space somewhere inside it, we have to use %[^\n]. Furthermore, we can't put a string argument into scanf since we don't know how big the string is. Also, we have to take care of buffer. If we missed out the clean buffer function from our code, our program will crash or running in an infinite loop. These common helper functions really help me learned many core C concept.
+
+
+3. Two features I dislike to most is creating the UI of cascading menu system and dealing with tickets. For first one, it is easy to forgot which layer I'm in. Which means, every time I have a bug to fix, I have to think in which layer I'm in right now. This confused me a lot when developing assignment1. Also, in this assignment, it has two main system: agent and customer and they have different logic to maintain. For example, if user login in a customer account, he can only see his account status and ticket status. What's more, the output is different from the agent account. 
+Take ticket head for example:
+void displayTicketHeader(int agentOrCus)
+{
+	if (agentOrCus == 1)
+	{
+		puts("------ ----- --------------- ------ ------------------------------ --------");
+		puts("Ticket Acct# Display Name    Status Subject                        Messages");
+		puts("------ ----- --------------- ------ ------------------------------ --------");
+	}
+	else if (agentOrCus == 0)
+	{
+		puts("------ ------ ------------------------------ --------");
+		puts("Ticket Status Subject                        Messages");
+		puts("------ ------ ------------------------------ --------");
+	}
+	return;
+}
+
+For tickets, I spent lots of times dealing with messages since it has many constraints. For example, each ticket can only store 20 messages and the first message should be created by the customer. Also, when displaying ticket messages, we have to send a pause every time we displayed 5 messages. Writing all these constraints in code makes my code looks pretty ugly and difficult to maintain. 
